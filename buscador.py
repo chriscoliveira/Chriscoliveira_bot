@@ -53,7 +53,7 @@ def retorna_materias(link, tag_bloco, tag_titulo, tag_preco=None, tag_link=None,
         elif research:
             if research.upper() in texto.upper():
                 # arquivo.write(f'{horario} - {texto.strip()} \n\n')
-                arquivo.write(f'{horario} - {texto.strip()} {tiny_url(link)}\n\n')
+                arquivo.write(f'{horario} - {texto.strip()}{texto[0:60].strip()}...  {tiny_url(link)}\n\n')
                 contador += 1
 
         # exibe a pesquisa total
@@ -73,5 +73,7 @@ if __name__ == '__main__':
     # retorna_materias(link='https://www.tecmundo.com.br/novidades', tag_bloco='.tec--card--medium',
     #                  tag_titulo='.tec--card__title__link', tag_horario='.z-flex-1', research=valor)
 
-    retorna_materias(link='https://www.buscape.com.br/search?q=', tag_bloco='.cardBody',
-                     tag_titulo='.name', tag_preco='.customValue', research='geforce')
+    # retorna_materias(link='https://www.edivaldobrito.com.br/', tag_bloco='.ultp-block-item',
+    #                  tag_titulo='.ultp-block-title', tag_preco=None, tag_horario='.ultp-block-date',research=None)
+    retorna_materias(link='https://www.diolinux.com.br/', tag_bloco='.entry-preview',
+                     tag_titulo='.entry-title', tag_preco=None, tag_horario='.meta-date', research=None)

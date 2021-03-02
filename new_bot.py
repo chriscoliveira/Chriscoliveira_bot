@@ -7,7 +7,7 @@ import buscador
 name = ''
 mensagem = f'{"#" * 30}\nOlá {name}!\nuse os comandos:\n{"#" * 30}\n' \
            f'\n/noticias_tecmundo\n/noticias_tudocelular\n/noticias_olhar_digital\n/noticias_uol\n' \
-           f'/noticias_techtudo\n/noticias_pesquisa\n/buscape'
+           f'/noticias_techtudo\n/noticias_pesquisa\n\n/linux_edivaldobrito\n/linux_diolinux\n/buscape'
 
 
 def handleCommad(content):
@@ -65,7 +65,7 @@ def handleCommad(content):
                 bot.sendMessage(chat_id, " " + str(inf.read()))
 
         if "noticias_tecmundo" in command:
-            bot.sendMessage(chat_id, 'Buscando Noticias contendo: ' + str(param))
+            bot.sendMessage(chat_id, f'Buscando {command} com: ' + str(param))
 
             # tecmundo
             buscador.retorna_materias(link='https://www.tecmundo.com.br/novidades', tag_bloco='.tec--card',
@@ -75,6 +75,7 @@ def handleCommad(content):
             bot.sendMessage(chat_id, " " + str(inf.read()))
 
         if "noticias_tudocelular" in command:
+            bot.sendMessage(chat_id, f'Buscando {command} com: ' + str(param))
             # tudocelular
             buscador.retorna_materias(link='https://www.tudocelular.com/', tag_bloco='.newlist_normal',
                                       tag_titulo='.title_new', tag_preco=None, tag_horario='em', research=param)
@@ -82,6 +83,7 @@ def handleCommad(content):
             bot.sendMessage(chat_id, " " + str(inf.read()))
 
         if "noticias_olhar_digital" in command:
+            bot.sendMessage(chat_id, f'Buscando {command} com: ' + str(param))
             # olhardigital
             buscador.retorna_materias(link='https://olhardigital.com.br/', tag_bloco='article',
                                       tag_titulo='.title', tag_preco=None, tag_horario=None, research=param)
@@ -89,6 +91,7 @@ def handleCommad(content):
             bot.sendMessage(chat_id, " " + str(inf.read()))
 
         if "noticias_uol" in command:
+            bot.sendMessage(chat_id, f'Buscando {command} com: ' + str(param))
             # uol
             buscador.retorna_materias(link='https://noticias.uol.com.br/', tag_bloco='.thumbnails-item',
                                       tag_titulo='.thumb-title', tag_preco=None, tag_horario=None, research=param)
@@ -96,13 +99,33 @@ def handleCommad(content):
             bot.sendMessage(chat_id, " " + str(inf.read()))
 
         if "noticias_techtudo" in command:
+            bot.sendMessage(chat_id, f'Buscando {command} com: ' + str(param))
             # techtudo
             buscador.retorna_materias(link='https://www.techtudo.com.br/', tag_bloco='.feed-post',
                                       tag_titulo='.feed-post-body', tag_preco=None, tag_horario=None, research=param)
             inf = open("resultado.txt", 'r')
             bot.sendMessage(chat_id, " " + str(inf.read()))
 
+        if 'linux_edivaldobrito' in command:
+            bot.sendMessage(chat_id, f'Buscando {command} com: ' + str(param))
+            bot.sendMessage(chat_id, f'Buscando {command} com: ' + str(param))
+            buscador.retorna_materias(link='https://www.edivaldobrito.com.br/', tag_bloco='.ultp-block-item',
+                                      tag_titulo='.ultp-block-title', tag_preco=None,  # tag_horario='.ultp-block-date',
+                                      research=None)
+            inf = open("resultado.txt", 'r')
+            bot.sendMessage(chat_id, " " + str(inf.read()))
+        if 'linux_diolinux' in command:
+
+            bot.sendMessage(chat_id, f'Buscando {command} com: ' + str(param))
+            buscador.retorna_materias(link='https://www.diolinux.com.br/', tag_bloco='.entry-preview',
+                                      tag_titulo='.entry-title', tag_preco=None, tag_horario='.meta-date',
+                                      research=None)
+            inf = open("resultado.txt", 'r')
+            bot.sendMessage(chat_id, " " + str(inf.read()))
+
         if "buscape" in command:
+            
+            bot.sendMessage(chat_id, f'Buscando {command} com: ' + str(param))
             buscador.retorna_materias(link='https://www.buscape.com.br/search?q=', tag_bloco='.cardBody',
                                       tag_titulo='.name', tag_preco='.customValue', research=param)
             inf = open("resultado.txt", 'r')
