@@ -17,11 +17,14 @@ def tiny_url(url):
     return tinyurl.decode('utf-8')
 
 
-def retorna_materias(link, tag_bloco, tag_titulo, tag_link=None, tag_horario=None, research=None):
-    pagina = requests.get(link)
+def retorna_materias(link, tag_bloco, tag_titulo, tag_preco=None, tag_link=None, tag_horario=None, research=None):
+    if tag_preco == None:
+        pagina = requests.get(link)
+    else:
+        pagina = requests.get(link + research)
     soup = BeautifulSoup(pagina.text, 'html.parser')
     arquivo = open('resultado.txt', 'w')
-    site = link.replace("www.", "").replace(".br", "").replace("/", "").replace('//','')
+    site = link.replace("www.", "").replace(".br", "").replace("/", "").replace('//', '')
     site = re.search(r'https:(.*?).com', site).group(1).upper()
     arquivo.write(
         f'\nNotícias de {site}\n')
@@ -30,6 +33,8 @@ def retorna_materias(link, tag_bloco, tag_titulo, tag_link=None, tag_horario=Non
         try:
             texto = materia.select_one(tag_titulo).text
             link = materia.select_one('a').get('href')
+            if tag_preco:
+                preco = materia.select_one(tag_preco).text
 
             # verifica se existe a tag de horario da materia
             if tag_horario:
@@ -40,12 +45,18 @@ def retorna_materias(link, tag_bloco, tag_titulo, tag_link=None, tag_horario=Non
         except Exception as e:
             texto = ''
 
-        if research:
+        # verifica se a pesquisa é especifica
+        if tag_preco:
+            contador += 1
+            # print(texto, preco, link, sep=' -_- ')
+            arquivo.write(f'{preco} - {texto[0:60]}... {tiny_url("https://www.buscape.com.br" + link)}\n\n')
+        elif research:
             if research.upper() in texto.upper():
                 # arquivo.write(f'{horario} - {texto.strip()} \n\n')
                 arquivo.write(f'{horario} - {texto.strip()} {tiny_url(link)}\n\n')
-                contador+=1
+                contador += 1
 
+        # exibe a pesquisa total
         else:
             # arquivo.write(f'{horario} - {texto.strip()} {tiny_url(link)}\n\n')
             if not horario == None:
@@ -59,6 +70,8 @@ def retorna_materias(link, tag_bloco, tag_titulo, tag_link=None, tag_horario=Non
 if __name__ == '__main__':
     # tecmundo
     valor = None
-    retorna_materias(link='https://www.tecmundo.com.br/novidades', tag_bloco='.tec--card--medium',
-                     tag_titulo='.tec--card__title__link', tag_horario='.z-flex-1', research=valor)
+    # retorna_materias(link='https://www.tecmundo.com.br/novidades', tag_bloco='.tec--card--medium',
+    #                  tag_titulo='.tec--card__title__link', tag_horario='.z-flex-1', research=valor)
 
+    retorna_materias(link='https://www.buscape.com.br/search?q=', tag_bloco='.cardBody',
+                     tag_titulo='.name', tag_preco='.customValue', research='geforce')
