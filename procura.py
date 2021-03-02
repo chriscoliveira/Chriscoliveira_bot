@@ -65,6 +65,7 @@ def retorna_materias(link, tag_bloco, tag_titulo, tag_preco=None, tag_link=None,
 
     arquivo.write(f'\nEncontrado {contador} materias no site {site}')
     arquivo.close()
+    return True
 
 
 if __name__ == '__main__':
